@@ -8,11 +8,37 @@ The project includes a simple Express server to generate quote images on request
 
 ```javascript
 app.get("/generate-quote-image", async (req, res) => {
-  // Implementation details as shown above
+  try {
+    const imageUrl = await generateImage();
+    console.log("Generated image URL:", imageUrl);
+    const quote = await generateQuoteFromImage(imageUrl);
+    console.log("Generated quote:", quote);
+    const finalImagePath = await addTextToImage(
+      imageUrl,
+      quote,
+      "public/logo_placeholder.svg"
+    );
+    console.log("Final image path:", finalImagePath);
+
+    const cloudinaryResponse = await uploadOnCloudinary(finalImagePath);
+
+    if (!cloudinaryResponse) {
+      return res
+        .status(500)
+        .json({ error: "Failed to upload image to Cloudinary." });
+    }
+
+    res.json({
+      quote,
+      cloudinaryResponse, // This will return the path to the saved image
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 ```
 
-# Functions
+## Functions
 
 ## Image Generation Functions
 
