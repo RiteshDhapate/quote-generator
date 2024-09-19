@@ -18,9 +18,13 @@ app.get("/", (req, res) => {
 
 app.get("/generate-quote-image", async (req, res) => {
   try {
-    const imageUrl = await generateImage();
+    const [imageUrl, quote] = await Promise.all([
+      generateImage(),
+      generateQuoteFromImage(),
+    ]);
+    // const imageUrl = await generateImage();
     console.log("Generated image URL:", imageUrl);
-    const quote = await generateQuoteFromImage(imageUrl);
+    // const quote = await generateQuoteFromImage(imageUrl);
     console.log("Generated quote:", quote);
     const finalImagePath = await addTextToImage(
       imageUrl,

@@ -31,7 +31,7 @@ export const generateImage = async () => {
 };
 
 // Generate a quote based on an image
-export const generateQuoteFromImage = async (imageUrl) => {
+export const generateQuoteFromImage = async () => {
   try {
     const completion = await openai.chat.completions.create({
       model: "gpt-4",
@@ -39,11 +39,7 @@ export const generateQuoteFromImage = async (imageUrl) => {
         {
           role: "system",
           content:
-            "You are a quote generator. Generate an inspirational quote based on the following image.",
-        },
-        {
-          role: "user",
-          content: `![image](${imageUrl})`,
+            "You are a quote generator. Generate an inspirational quote.",
         },
       ],
     });
