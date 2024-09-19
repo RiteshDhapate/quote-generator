@@ -48,6 +48,8 @@ Generates a random image based on predefined prompts.
 
 **Returns:** `Promise<string>` - The URL of the generated image.
 
+[go to code](#generateimage)
+
 ### `generateQuoteFromImage(imageUrl)`
 
 Generates an inspirational quote based on the provided image URL.
