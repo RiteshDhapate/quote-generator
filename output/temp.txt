@@ -1,0 +1,1 @@
+In development environment -- All the compressed images will be temporarily stored in this folder
