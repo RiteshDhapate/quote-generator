@@ -1,12 +1,13 @@
 import express from "express";
 import OpenAI from "openai";
 import dotenv from "dotenv";
-import { createCanvas, loadImage, registerFont } from "canvas"; // Ensure you have canvas installed
+import { createCanvas, loadImage } from "canvas"; // Ensure you have canvas installed
 import fs from "fs";
 
 dotenv.config();
 
 const app = express();
+app.use(express.static("public"));
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -17,8 +18,6 @@ const generateImage = async () => {
   try {
     const prompts = [
       "Generate a serene background image featuring a tranquil nature scene, such as a sunset over a calm lake or a misty forest, with no text.",
-      "Create an abstract blend of soft pastel colors swirling together, providing a soothing and artistic background, with no text.",
-      "Design a minimalist landscape with rolling hills and a clear blue sky, emphasizing simplicity and peace, with no text.",
       "Show a panoramic view of a bustling city skyline at dusk, with twinkling lights starting to glow, creating a vibrant yet peaceful scene, with no text.",
       "Generate a breathtaking view of the night sky filled with stars and a glowing galaxy, creating a sense of wonder and infinity, with no text.",
     ];
@@ -125,7 +124,7 @@ const addTextToImage = async (imageUrl, text, logoPath) => {
   ); // 20px from the bottom
 
   const buffer = canvas.toBuffer("image/png");
-  const outputPath = "output/image-with-quote.png";
+  const outputPath = "public/image-with-quote.png";
   fs.writeFileSync(outputPath, buffer);
   return outputPath;
 };
