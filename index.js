@@ -3,6 +3,7 @@ import OpenAI from "openai";
 import dotenv from "dotenv";
 import { createCanvas, loadImage } from "canvas"; // Ensure you have canvas installed
 import fs from "fs";
+import { uploadOnCloudinary } from "./utils/cloudinary.js"; // Import the function you created
 
 dotenv.config();
 
@@ -124,7 +125,7 @@ const addTextToImage = async (imageUrl, text, logoPath) => {
   ); // 20px from the bottom
 
   const buffer = canvas.toBuffer("image/png");
-  const outputPath = "public/image-with-quote.png";
+  const outputPath = "output/image-with-quote.png";
   fs.writeFileSync(outputPath, buffer);
   return outputPath;
 };
@@ -147,9 +148,11 @@ app.get("/generate-quote-image", async (req, res) => {
     );
     console.log("Final image path:", finalImagePath);
 
+    const cloudinaryResponse = await uploadOnCloudinary(finalImagePath);
+
     res.json({
       quote,
-      imageUrl: finalImagePath, // This will return the path to the saved image
+      cloudinaryResponse, // This will return the path to the saved image
     });
   } catch (error) {
     res.status(500).json({ error: error.message });
