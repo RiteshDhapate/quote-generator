@@ -60,7 +60,7 @@ Generates an inspirational quote based on the provided image URL.
 
 **Returns:** `Promise<string>` - The generated quote.
 
-[go to code](utils/generatedQuote.js#generateQuoteFromImage)
+[go to code](utils/generateQuote.js#generateQuoteFromImage)
 
 ### `addTextToImage(imageUrl, text, logoPath)`
 
@@ -74,7 +74,7 @@ Adds text and a logo to the specified image, saving the result as a new image.
 
 **Returns:** `Promise<string>` - The path of the saved image with the text and logo.
 
-[go to code](utils/generatedQuote.js#addTextToimage)
+[go to code](utils/generateQuote.js#addTextToimage)
 
 ## Cloudinary Functions
 
