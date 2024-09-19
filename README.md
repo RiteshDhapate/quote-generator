@@ -48,7 +48,7 @@ Generates a random image based on predefined prompts.
 
 **Returns:** `Promise<string>` - The URL of the generated image.
 
-[go to code](#generateimage)
+[go to code](utils/cloudinary.js#generateimage)
 
 ### `generateQuoteFromImage(imageUrl)`
 
@@ -59,6 +59,8 @@ Generates an inspirational quote based on the provided image URL.
 - `imageUrl` - The URL of the image to generate a quote from.
 
 **Returns:** `Promise<string>` - The generated quote.
+
+[go to code](utils/generatedQuote.js#generatequotefromimage)
 
 ### `addTextToImage(imageUrl, text, logoPath)`
 
@@ -72,6 +74,8 @@ Adds text and a logo to the specified image, saving the result as a new image.
 
 **Returns:** `Promise<string>` - The path of the saved image with the text and logo.
 
+[go to code](utils/generatedQuote.js#addtexttoimage)
+
 ## Cloudinary Functions
 
 ### `uploadOnCloudinary(localFilePath)`
@@ -84,6 +88,8 @@ Uploads an image to Cloudinary.
 
 **Returns:** `Promise<object | null>` - The Cloudinary response containing image details, or null on failure.
 
+[go to code](utils/cloudinary.js#uploadOnCloudinary)
+
 ### `deleteOnCloudinary(publicId)`
 
 Deletes an image from Cloudinary.
@@ -93,6 +99,8 @@ Deletes an image from Cloudinary.
 - `publicId` - The public ID of the image to delete.
 
 **Returns:** `Promise<object>` - The Cloudinary response.
+
+[go to code](utils/cloudinary.js#deleteOnCloudinary)
 
 ## Environment Variables
 
