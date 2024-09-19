@@ -150,6 +150,12 @@ app.get("/generate-quote-image", async (req, res) => {
 
     const cloudinaryResponse = await uploadOnCloudinary(finalImagePath);
 
+    if (!cloudinaryResponse) {
+      return res
+        .status(500)
+        .json({ error: "Failed to upload image to Cloudinary." });
+    }
+
     res.json({
       quote,
       cloudinaryResponse, // This will return the path to the saved image
