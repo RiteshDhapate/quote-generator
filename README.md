@@ -48,7 +48,7 @@ Generates a random image based on predefined prompts.
 
 **Returns:** `Promise<string>` - The URL of the generated image.
 
-[go to code](utils/cloudinary.js#generateImage)
+[go to code](utils/generateQuote.js#generateImage)
 
 ### `generateQuoteFromImage(imageUrl)`
 
