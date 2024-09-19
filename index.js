@@ -1,8 +1,7 @@
 import express from "express";
 import OpenAI from "openai";
 import dotenv from "dotenv";
-import axios from "axios";
-import { createCanvas, loadImage } from "canvas"; // Ensure you have canvas installed
+import { createCanvas, loadImage, registerFont } from "canvas"; // Ensure you have canvas installed
 import fs from "fs";
 
 dotenv.config();
@@ -16,12 +15,20 @@ const openai = new OpenAI({
 // Generate an image
 const generateImage = async () => {
   try {
+    const prompts = [
+      "Generate a serene background image featuring a tranquil nature scene, such as a sunset over a calm lake or a misty forest, with no text.",
+      "Create an abstract blend of soft pastel colors swirling together, providing a soothing and artistic background, with no text.",
+      "Design a minimalist landscape with rolling hills and a clear blue sky, emphasizing simplicity and peace, with no text.",
+      "Show a panoramic view of a bustling city skyline at dusk, with twinkling lights starting to glow, creating a vibrant yet peaceful scene, with no text.",
+      "Generate a breathtaking view of the night sky filled with stars and a glowing galaxy, creating a sense of wonder and infinity, with no text.",
+    ];
+
+    const prompt = prompts[Math.floor(Math.random() * prompts.length)];
     const imageResponse = await openai.images.generate({
-      prompt: "An inspiring background with no text",
+      prompt,
       n: 1,
       size: "1024x1024",
     });
-    console.log("Generated image:", imageResponse.data);
     return imageResponse.data[0].url;
   } catch (error) {
     console.error("Error generating image:", error);
@@ -56,8 +63,9 @@ const generateQuoteFromImage = async (imageUrl) => {
 };
 
 // Add text to image
-const addTextToImage = async (imageUrl, text) => {
+const addTextToImage = async (imageUrl, text, logoPath) => {
   const image = await loadImage(imageUrl);
+  const logo = await loadImage(logoPath);
   const canvas = createCanvas(image.width, image.height);
   const ctx = canvas.getContext("2d");
 
@@ -70,7 +78,7 @@ const addTextToImage = async (imageUrl, text) => {
 
   const maxWidth = image.width * 0.9; // 90% of image width
   const fontSize = Math.floor(image.height / 15); // Dynamic font size
-  ctx.font = `${fontSize}px Arial`;
+  ctx.font = `bold ${fontSize}px Sans`; // Font style
   ctx.fillStyle = "white"; // Text color
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
@@ -105,6 +113,17 @@ const addTextToImage = async (imageUrl, text) => {
     y += lineHeight;
   });
 
+  // Draw the logo at the bottom center
+  const logoWidth = image.width * 0.2; // Adjust logo size as needed
+  const logoHeight = (logo.height / logo.width) * logoWidth; // Maintain aspect ratio
+  ctx.drawImage(
+    logo,
+    (canvas.width - logoWidth) / 2,
+    canvas.height - logoHeight - 20,
+    logoWidth,
+    logoHeight
+  ); // 20px from the bottom
+
   const buffer = canvas.toBuffer("image/png");
   const outputPath = "output/image-with-quote.png";
   fs.writeFileSync(outputPath, buffer);
@@ -122,7 +141,11 @@ app.get("/generate-quote-image", async (req, res) => {
     console.log("Generated image URL:", imageUrl);
     const quote = await generateQuoteFromImage(imageUrl);
     console.log("Generated quote:", quote);
-    const finalImagePath = await addTextToImage(imageUrl, quote);
+    const finalImagePath = await addTextToImage(
+      imageUrl,
+      quote,
+      "public/logo_placeholder.svg"
+    );
     console.log("Final image path:", finalImagePath);
 
     res.json({
