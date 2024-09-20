@@ -31,25 +31,39 @@ export const generateImage = async () => {
 };
 
 // Generate a quote based on an image
-export const generateQuoteFromImage = async (imageUrl) => {
+export const generateQuoteFromImage = async () => {
   try {
     const completion = await openai.chat.completions.create({
-      model: "gpt-4",
+      model: "gpt-4o-mini",
       messages: [
         {
           role: "system",
-          content:
-            "You are a quote generator. Generate an inspirational quote based on the following image.",
-        },
-        {
-          role: "user",
-          content: `![image](${imageUrl})`,
+          content: `You are a quote generator. Generate an inspirational quote. Then, based on this quote, generate a subject and a message. Return the response in valid JSON format with the following structure:
+{
+  "quote": "string",
+  "subject": "string",
+  "message": "string"
+},
+Do not add any placeholder text or additional commentary. Only return the JSON.`,
         },
       ],
     });
 
-    const quote = completion.choices[0].message.content;
-    return quote;
+    console.log("Completion", completion.choices[0].message.content);
+
+    const quoteData = completion.choices[0].message.content;
+
+    // const message = await openai.chat.completions.create({
+    //   model: "gpt-4o-mini",
+    //   messages: [
+    //     {
+    //       role: "system",
+    //       content: `Generate a subject and message based on this ${quote}, Do not add placeholder text. The response should be in json format.`,
+    //     },
+    //   ],
+    // });
+
+    return JSON.parse(quoteData);
   } catch (error) {
     console.error("Error generating quote:", error);
     throw new Error("Failed to generate a quote.");

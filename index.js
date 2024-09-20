@@ -20,7 +20,7 @@ app.get("/generate-quote-image", async (req, res) => {
   try {
     const imageUrl = await generateImage();
     console.log("Generated image URL:", imageUrl);
-    const quote = await generateQuoteFromImage(imageUrl);
+    const { quote, subject, message } = await generateQuoteFromImage(imageUrl);
     console.log("Generated quote:", quote);
     const finalImagePath = await addTextToImage(
       imageUrl,
@@ -39,6 +39,8 @@ app.get("/generate-quote-image", async (req, res) => {
 
     res.json({
       quote,
+      subject,
+      message,
       cloudinaryResponse, // This will return the path to the saved image
     });
   } catch (error) {
