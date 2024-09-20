@@ -4,7 +4,7 @@ The project includes a simple Express server to generate quote images on request
 
 ## Route
 
-- GET /generate-quote-image: Generates an image, creates a quote, adds the quote to the image, and uploads it to Cloudinary.
+- GET /generate-quote-image: Generates an image, creates a quote and based on the quote generates a message and subject, Also adds the quote to the image, and uploads it to Cloudinary.
 
 ```javascript
 app.get("/generate-quote-image", async (req, res) => {
