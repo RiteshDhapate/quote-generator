@@ -135,12 +135,12 @@ export const addTextToImage = async (imageUrl, text, logoPath) => {
   });
 
   // Draw the logo at the bottom center
-  const logoWidth = image.width * 0.2; // Adjust logo size as needed
+  const logoWidth = image.width * 0.25; // Adjust logo size as needed
   const logoHeight = (logo.height / logo.width) * logoWidth; // Maintain aspect ratio
   ctx.drawImage(
     logo,
     (canvas.width - logoWidth) / 2,
-    canvas.height - logoHeight - 20,
+    canvas.height - logoHeight - 40,
     logoWidth,
     logoHeight
   ); // 20px from the bottom
