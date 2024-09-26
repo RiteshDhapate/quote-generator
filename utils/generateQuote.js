@@ -51,15 +51,32 @@ export const generateQuoteFromImage = async () => {
       messages: [
         {
           role: "system",
-          content: `You are a quote generator. Generate an inspirational quote. Then, based on this quote, generate a subject and a message. Return the response in valid JSON format with the following structure:
-{
-  "quote": "string",
-  "subject": "string",
-  "message": "string"
-},
-Do not add any placeholder text or additional commentary. Only return the JSON.`,
+          content: `You are a quote generator focused on sales motivation. Generate an inspirational quote about improving sales techniques and staying motivated. The quote should be concise, similar in length to "Focus on Building Relationships, Not Just Closing Deals". Then, based on this quote, generate a subject and a message.`,
         },
       ],
+      response_format: {
+        type: "json_schema",
+        json_schema: {
+          name: "Quote",
+          schema: {
+            type: "object",
+            properties: {
+              quote: {
+                type: "string",
+              },
+              subject: {
+                type: "string",
+              },
+              message: {
+                type: "string",
+              },
+            },
+            required: ["quote", "subject", "message"],
+            additionalProperties: false,
+          },
+          strict: true,
+        },
+      },
     });
 
     console.log("Completion", completion.choices[0].message.content);
