@@ -5,7 +5,8 @@
     "cloudinary": "^2.5.0",
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
-    "openai": "^4.62.1"
+    "openai": "^4.62.1",
+    "quote-generator": "file:"
   },
   "name": "quote-generator",
   "version": "1.0.0",
