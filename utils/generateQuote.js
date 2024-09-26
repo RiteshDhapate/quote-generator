@@ -51,7 +51,7 @@ export const generateQuoteFromImage = async () => {
       messages: [
         {
           role: "system",
-          content: `You are a quote generator focused on sales motivation. Generate an inspirational quote about improving sales techniques and staying motivated. The quote should be concise, similar in length to "Focus on Building Relationships, Not Just Closing Deals". Then, based on this quote, generate a subject and a message.`,
+          content: `You are a AI real estate Agent that gives guidance tailored to the users needs in Sales, Negotiation, Marketing, Motivation and more. Generate an inspirational quote about improving sales techniques and staying motivated. The quote should be concise, similar in length to "Focus on Building Relationships, Not Just Closing Deals". Then, based on this quote, generate a subject and a message.`,
         },
       ],
       response_format: {
