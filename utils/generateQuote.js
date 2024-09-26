@@ -2,6 +2,7 @@ import OpenAI from "openai";
 import { createCanvas, loadImage } from "canvas"; // Ensure you have canvas installed
 import fs from "fs";
 import dotenv from "dotenv";
+import { url } from "inspector";
 dotenv.config();
 
 const openai = new OpenAI({
@@ -11,27 +12,11 @@ const openai = new OpenAI({
 // Generate an image
 export const generateImage = async () => {
   try {
-    const prompts = [
-      // Optimized nature/urban scene prompts:
-      "Create a peaceful background image of nature, like a sunset casting warm light over a calm lake or a misty forest, with no text.",
-      "Render a panoramic view of a lively city skyline at dusk, with lights gradually illuminating the scene, exuding vibrant tranquility, with no text.",
-      "Depict a stunning night sky full of sparkling stars and a glowing galaxy, evoking a feeling of boundless wonder, with no text.",
+    const prompt =
+      "Create an image focusing on themes of sales, negotiation, marketing, or motivation. The image should inspire real estate professionals to improve their sales techniques and stay motivated. It could depict scenarios like a handshake to symbolize closing deals, a presentation to represent marketing skills, or a confident agent to embody motivation.";
 
-      // New non-nature prompts:
-      "Generate a futuristic cityscape with towering skyscrapers, flying vehicles, and neon lights reflecting off smooth metallic surfaces, with no text.",
-      "Show an abstract background with vibrant colors and geometric shapes interlocking and flowing together, creating a dynamic and energetic feel, with no text.",
-      "Create an ancient, mystical temple ruin with towering stone columns and intricate carvings, bathed in the soft glow of moonlight, with no text.",
-      "Generate a high-tech lab interior with glowing holograms, sleek workstations, and a sense of advanced technology, with no text.",
-      "Show a cozy coffee shop interior on a rainy day, with soft, warm lighting and raindrops trickling down the window, with no text.",
-      "Render a bustling market scene from a distant future, with exotic stalls, colorful goods, and crowds of people from various worlds, with no text.",
-      "Create a minimalist interior design with clean lines, modern furniture, and natural light pouring through large windows, with no text.",
-      "Generate a retro 80s-inspired background with neon grids, bold gradients, and futuristic landscapes, reminiscent of classic sci-fi aesthetics, with no text.",
-      "Show an elegant ballroom with chandeliers hanging from the ceiling, polished floors reflecting golden light, and the sense of a grand event, with no text.",
-      "Depict a tranquil library with rows of bookshelves, soft armchairs, and sunlight filtering in through large windows, evoking a sense of calm and knowledge, with no text.",
-    ];
-
-    const prompt = prompts[Math.floor(Math.random() * prompts.length)];
     const imageResponse = await openai.images.generate({
+      model: "dall-e-3",
       prompt,
       n: 1,
       size: "1024x1024",
@@ -44,14 +29,25 @@ export const generateImage = async () => {
 };
 
 // Generate a quote based on an image
-export const generateQuoteFromImage = async () => {
+export const generateQuoteFromImage = async (imageUrl) => {
   try {
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",
       messages: [
         {
-          role: "system",
-          content: `You are a AI real estate Agent that gives guidance tailored to the users needs in Sales, Negotiation, Marketing, Motivation and more. Generate an inspirational quote about improving sales techniques and staying motivated. The quote should be concise, similar in length to "Focus on Building Relationships, Not Just Closing Deals". Then, based on this quote, generate a subject and a message.`,
+          role: "user",
+          content: [
+            {
+              type: "text",
+              text: `You are a AI real estate Agent that gives guidance tailored to the users needs in Sales, Negotiation, Marketing, Motivation and more. Generate an inspirational quote based on the Image about improving sales techniques and staying motivated. The quote should be concise, similar in length to "Focus on Building Relationships, Not Just Closing Deals". Then, based on this quote, generate a subject and a message.`,
+            },
+            {
+              type: "image_url",
+              image_url: {
+                url: imageUrl,
+              },
+            },
+          ],
         },
       ],
       response_format: {
