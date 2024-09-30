@@ -2,7 +2,6 @@ import OpenAI from "openai";
 import { createCanvas, loadImage } from "canvas"; // Ensure you have canvas installed
 import fs from "fs";
 import dotenv from "dotenv";
-import { url } from "inspector";
 dotenv.config();
 
 const openai = new OpenAI({
@@ -13,7 +12,7 @@ const openai = new OpenAI({
 export const generateImage = async () => {
   try {
     const prompt =
-      "Create an image focusing on themes of sales, negotiation, marketing, or motivation. The image should inspire real estate professionals to improve their sales techniques and stay motivated. It could depict scenarios like a handshake to symbolize closing deals, a presentation to represent marketing skills, or a confident agent to embody motivation.";
+      "Create an image that resembles a motivational quote background. The image should not include any text, but leave ample space for text to be added later. The style should be clean, modern, and suitable for a professional real estate context. The images should as it is taken by a photographer.";
 
     const imageResponse = await openai.images.generate({
       model: "dall-e-3",
