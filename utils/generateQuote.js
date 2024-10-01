@@ -12,16 +12,12 @@ const openai = new OpenAI({
 export const generateImage = async () => {
   try {
     const prompts = [
-      // Optimized nature/urban scene prompts:
-      "Create a peaceful background image of nature, like a sunset casting warm light over a calm lake or a misty forest, with no text.",
-      "Render a panoramic view of a lively city skyline at dusk, with lights gradually illuminating the scene, exuding vibrant tranquility, with no text.",
+      "Create a peaceful realistic background image of nature, like a sunset casting warm light over a calm lake or a misty forest",
+      "Render a realistic panoramic view of a lively city skyline at dusk, with lights gradually illuminating the scene, exuding vibrant tranquility, with no text.",
       "Depict a stunning night sky full of sparkling stars and a glowing galaxy, evoking a feeling of boundless wonder, with no text.",
-      // New non-nature prompts:
-      "Show an abstract background with vibrant colors and geometric shapes interlocking and flowing together, creating a dynamic and energetic feel, with no text.",
-      "Show a cozy coffee shop interior on a rainy day, with soft, warm lighting and raindrops trickling down the window, with no text.",
-      "Create a minimalist interior design with clean lines, modern furniture, and natural light pouring through large windows, with no text.",
-      "Show an elegant ballroom with chandeliers hanging from the ceiling, polished floors reflecting golden light, and the sense of a grand event, with no text.",
       "Depict a tranquil library with rows of bookshelves, soft armchairs, and sunlight filtering in through large windows, evoking a sense of calm and knowledge, with no text.",
+      "Zen-inspired minimalist landscape",
+      "A serene, realistic background image that looks like it was taken by a professional photographer.",
     ];
     const prompt = prompts[Math.floor(Math.random() * prompts.length)];
 
@@ -44,15 +40,11 @@ export const generateQuoteFromImage = async (imageUrl) => {
       model: "gpt-4o-mini",
       messages: [
         {
-          role: "system",
-          content: `You are a AI real estate Agent that gives guidance tailored to the users needs in Sales, Negotiation, Marketing, Motivation and more `,
-        },
-        {
           role: "user",
           content: [
             {
               type: "text",
-              text: `Generate an inspirational quote based on the Image. The quote should be concise, similar in length to "Focus on Building Relationships, Not Just Closing Deals". Then, based on this quote, generate a subject and a message.`,
+              text: `You are a AI real estate Agent that gives guidance tailored to the users needs in Sales, Negotiation and Marketing. Generate an inspirational real estate, sales, negotiation, or marketing related quote based on the image. The quote should be similar in length to "Focus on building relationships, not just closing deal." Then, based on the generated quote, provide a subject and a message.`,
             },
             {
               type: "image_url",
@@ -125,7 +117,7 @@ export const addTextToImage = async (imageUrl, text, logoPath) => {
 
   const maxWidth = image.width * 0.9; // 90% of image width
   const fontSize = Math.floor(image.height / 15); // Dynamic font size
-  ctx.font = `bold ${fontSize}px Sans`; // Font style
+  ctx.font = `bold ${fontSize}px Tahoma`; // Font style
   ctx.fillStyle = "white"; // Text color
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
