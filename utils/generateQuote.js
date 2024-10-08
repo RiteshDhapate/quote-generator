@@ -11,17 +11,11 @@ const openai = new OpenAI({
 // Generate an image
 export const generateImage = async () => {
   try {
-    const prompts = [
-      "Create a peaceful realistic background image of nature, like a sunset casting warm light over a calm lake or a misty forest",
-      "Render a realistic panoramic view of a lively city skyline at dusk, with lights gradually illuminating the scene, exuding vibrant tranquility, with no text.",
-      "Depict a stunning night sky full of sparkling stars and a glowing galaxy, evoking a feeling of boundless wonder, with no text.",
-      "Depict a tranquil library with rows of bookshelves, soft armchairs, and sunlight filtering in through large windows, evoking a sense of calm and knowledge, with no text.",
-      "Zen-inspired minimalist landscape",
-      "A serene, realistic background image that looks like it was taken by a professional photographer.",
-    ];
-    const prompt = prompts[Math.floor(Math.random() * prompts.length)];
+    const prompt =
+      "Create an image focusing on themes of sales, negotiation, marketing, or motivation. The image should inspire real estate professionals to improve their sales techniques and stay motivated. It could depict scenarios like a handshake to symbolize closing deals, a presentation to represent marketing skills, or a confident agent to embody motivation.";
 
     const imageResponse = await openai.images.generate({
+      model: "dall-e-3",
       prompt,
       n: 1,
       size: "1024x1024",
