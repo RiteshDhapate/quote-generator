@@ -25,7 +25,7 @@ app.get("/generate-quote-image", async (req, res) => {
     const finalImagePath = await addTextToImage(
       imageUrl,
       quote,
-      "public/logo_transparent.png"
+      "public/angent_partner_logo.png"
     );
     console.log("Final image path:", finalImagePath);
 
